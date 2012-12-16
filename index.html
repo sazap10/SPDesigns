@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SP Designs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <!-- Main stylesheet imports bootstrap css and adds custom -->
+    
+    <link href="css/style.css" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="index.html">SP Designs</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li>
+                <li class="active">
+                <a href="#portfolio">Portfolio</a>
+                </li>
+                <li class="dropdown">
+                  <a href="#"
+                      class="dropdown-toggle"
+                      data-toggle="dropdown">
+                      <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="bezier.html">Bezier Curve</a></li>
+                  <li><a href="solar.html">Solar System</a></li>
+                  <li><a href="pong.html">Pong</a></li>
+                  <li><a href="batman.html">Batman</a></li>
+                  <li><a href="blackjack.html">Blackjack</a></li>
+                </ul>
+                </li>
+              </li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+            
+            </form>
+            <p class="navbar-text pull-right">@sazap10</p>
+          <a class="pull-right twitter-logo" href="https://twitter.com/sazap10"><img src="img/twitter-bird-dark-bgs.png"></a>
+          </div><!--/.nav-collapse -->
+          
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div id="portfolio">
+        <div class="page-header">
+          <h1>Portfolio <small>Some of the projects I have done</small></h1>
+        </div>
+        <div class="row">
+          <div class="span6 offset3">
+            <!--  Carousel - consult the Twitter Bootstrap docs at 
+            http://twitter.github.com/bootstrap/javascript.html#carousel -->
+              <div id="home-portfolio" class="carousel slide"><!-- class of slide for animation -->
+                <div class="carousel-inner">
+                  <div class="item active"><!-- class of active since it's the first item -->
+                    <img src="img/bezier.png" alt=""  width="600px" height="400px" />
+                    <div class="carousel-caption">
+                      <p>A bezier curve using a recursive algorithm implemented using the Java 2D graphics library.</p>
+                      <a class="btn btn-primary" href="bezier.html">View »</a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="img/solar.png" alt="" width="600px" height="400px" />
+                    <div class="carousel-caption">
+                      <p>A small implementation of the solar system showcasing Hierarchical Animation. Uses the Java 2D graphics library.</p>
+                      <a class="btn btn-primary" href="solar.html">View »</a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="img/pong.png" alt="" width="600px" height="400px"/>
+                    <div class="carousel-caption">
+                      <p>A simple pong game using Object Orientated Programming. Implemented using the Java 2D graphics library.</p>
+                      <a class="btn btn-primary" href="pong.html">View »</a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="img/batman.png" alt="" width="600px" height="400px"/>
+                    <div class="carousel-caption">
+                      <p>A multimedia advertisement for Batman:Arkham City. Contains information about Batman: Arkham Asylum and Batman: Arkham  City such as characters, gadgets, plot and photo/video gallaries. Created using Flash.</p>
+                      <a class="btn btn-primary" href="batman.html">View »</a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="img/blackjack.jpg" alt="" width="600px" height="400px"/>
+                    <div class="carousel-caption">
+                      <p>A simple blackjack game created using HTML5 canvas object and javascript. All content generated using code. The workings of the game created during a Codecademy course.</p>
+                      <a class="btn btn-primary" href="blackjack.html">View »</a>
+                    </div>
+                  </div>
+                </div><!-- /.carousel-inner -->
+                <!--  Next and Previous controls below
+                      href values must reference the id for this carousel -->
+                  <a class="carousel-control left" href="#home-portfolio" data-slide="prev">&lsaquo;</a>
+                  <a class="carousel-control right" href="#home-portfolio" data-slide="next">&rsaquo;</a>
+              </div><!-- /.carousel -->
+            </div>
+          </div>
+        </div>
+      <hr>
+      <div id="about">
+        <div class="page-header">
+          <h1>About <small>Little bit about me</small></h1>
+        </div>
+      </div>
+      <hr>
+      <div id="contact">
+        <div class="page-header">
+          <h1>Contact <small>How to contact me</small></h1>
+        </div>
+      </div>
+      <footer>
+        <p>&copy; Sachin Pande 2012</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- Link jQuery via Google + local fallback, see h5bp.com -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.8.0.min.js"><\/script>')</script>
+
+    <!-- Bootstrap JS, the minified bundle -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Sample Plugin: Prettify -->
+    <script src="js/prettify/prettify.js"></script>
+
+    <!-- If needed, initialize scripts on this page -->
+    <script>
+
+      // Activate Google Prettify for pretty-printing code
+      addEventListener('load', prettyPrint, false);
+
+      $(document).ready(function(){
+
+        // Add prettyprint class to pre elements
+        $('pre').addClass('prettyprint');
+        //Add the carousel animation
+		    $('#home-portfolio').carousel({
+          interval:4000
+        });
+      });
+    </script>
+    <script>
+     
+    </script>
+  </body>
+</html>
