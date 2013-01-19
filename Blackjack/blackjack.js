@@ -106,11 +106,21 @@ function createCard(context,x,y,num,suit,width,height,colour){
 *  
 * End of createCard method
 *
+* Set up the instance variables
+* colour - list of the colours of card
+* cardNum - list of numbers on the card
+* suitName - list of symbols of each suit
+* cards - list used to store the cards in the deck
 */
 var colour= ["black","red"];
 var cardNum = ["A",2,3,4,5,6,7,8,9,10,"J","Q","K"];
 var suitName = [eval('"\\u2660"'),eval('"\\u2665"'),eval('"\\u2663"'),eval('"\\u2666"')];
 var cards=[];
+/* 
+* createDeck()
+* creates the deck by creating a card and storing them to cards
+* shuffles the deck using the shuffleDeck method
+*/
 function createDeck(){
     for(var i = 1;i<=13;i++){
         for(var j = 1;j<=4;j++){
@@ -119,21 +129,31 @@ function createDeck(){
     }
     cards = shuffleDeck(cards);
 }
+/* 
+* shuffleDeck()
+* shuffles the deck to have the cards stored randomly
+*/
 function shuffleDeck(v){
     for(var j, x, i = v.length; i; j = parseInt(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
     return v;
 }
+/*
+* Prototype for the Card type
+*/
 function Card(sui,num){
     var suit = sui;
     var number = num;
+	//returns the card number
     this.getNumber = function(){
         return number;
     };
+	//returns the suit number
     this.getSuit = function(){
         return suit;
     };
+	//return card's value
     this.getValue = function(){
-        if(number ===1)
+        if(number === 1)
             return 11;
         else if(number >= 11 && number <= 13)
             return 10;
@@ -141,19 +161,25 @@ function Card(sui,num){
             return number;
     };
 }
+/*
+* Prototype of Hand type
+*/
 function Hand(context,x,y){
     var cards =[];
     var handx=x;
     var handy=y;
+	//set up initial hand with two cards
     cards.push(deal());
     createCard(context,x,y,cardNum[cards[0].getNumber()-1],suitName[cards[0].getSuit()-1],60,100,colour[(cards[0].getSuit()-1)%2]);
     x+=75;
     cards.push(deal());
     createCard(context,x,y,cardNum[cards[1].getNumber()-1],suitName[cards[1].getSuit()-1],60,100,colour[(cards[1].getSuit()-1)%2]);
     x+=75;
+	//returns the cards in the hand
     this.getHand = function(){
         return cards;
     };
+	//returns the score of the hand
     this.score = function(){
         var result=0;
         var numOfAces =0;
@@ -169,6 +195,7 @@ function Hand(context,x,y){
         }
         return result;
     };
+	//prints the hand to console
     this.printHand = function(){
         var result = "";
         for(var i = 0;i< cards.length;i++){
@@ -180,37 +207,38 @@ function Hand(context,x,y){
         }
         return result;
     };
+	//adds new card to deck
     this.hitMe = function(){
         cards.push(deal());
         createCard(context,x,y,cardNum[cards[cards.length-1].getNumber()-1],suitName[cards[cards.length-1].getSuit()-1],60,100,colour[(cards[cards.length-1].getSuit()-1)%2]);
     	x+=75;
     };
 }
-
+//pops a card from the cards array
 function deal(){
     return cards.pop();
 }
-
+//plays as the computer
 function playAsDealer(context){
     var hand = new Hand(context,5,180);
     var score = hand.score();
     while(score < 17){
-        
         hand.hitMe();
         score = hand.score();
+		context.fillText("Dealer Score: "+hand.score(),5,330);
     }
     return hand;
 }
-
+//play as the user 
 function playAsUser(context){
     var hand = new Hand(context,5,30);
     var hit = true;
     while(hit){
         var score = hand.score();
-        
         hit = confirm("Total score: "+score+"\n"+"Hit me?");
         if(score>21) break;
         if(hit) hand.hitMe();
+		context.fillText("Your Score: "+hand.score(),5,310);
     }
     return hand;
 }
@@ -220,14 +248,14 @@ function declareWinner(userHand,dealerHand){
     dealerScore = dealerHand.score();
     if(userScore>21 && dealerScore >21)
         return "You tied!";
-    else if(userScore>21)
+    else if(userScore > 21)
         return "You lose!";
-    else if(dealerScore >21)
+    else if(dealerScore > 21)
         return "You win!";
     else{
-        if(userScore>dealerScore)
+        if(userScore > dealerScore)
             return "You win!";
-        else if(userScore ===dealerScore)
+        else if(userScore === dealerScore)
             return "You tied!";
         else
             return "You lose!";
