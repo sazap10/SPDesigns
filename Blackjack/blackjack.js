@@ -15,6 +15,22 @@ $deal = $('.deal');
 $hit = $('.hit');
 $stick= $('.stick');
 var state = 0;
+var hit = true;
+var buttonPressed = false;
+
+$hit.click(function(){
+	hit = true;
+	buttonPressed = true;
+});
+
+$stick.click(function(){
+	hit = false;
+	buttonPressed = true;
+});
+
+function waitForButtonClick(){
+	
+}
 CanvasRenderingContext2D.prototype.clear = function (preserveTransform) {
   if (preserveTransform) {
     this.save();
@@ -231,13 +247,13 @@ function playAsDealer(context){
 //play as the user 
 function playAsUser(context){
     var hand = new Hand(context,5,30);
-    var hit = true;
+    hit = true;
     while(hit){
         var score = hand.score();
         hit = confirm("Total score: "+score+"\n"+"Hit me?");
         if(score>21) break;
         if(hit) hand.hitMe();
-		context.fillRect(5,310,300,20);
+		context.clearRect(5,290,300,20);
 		context.fillText("Your Score: "+hand.score(),5,310);
     }
     return hand;
