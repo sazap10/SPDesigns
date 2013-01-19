@@ -225,7 +225,6 @@ function playAsDealer(context){
     while(score < 17){
         hand.hitMe();
         score = hand.score();
-		context.fillText("Dealer Score: "+hand.score(),5,330);
     }
     return hand;
 }
@@ -238,7 +237,7 @@ function playAsUser(context){
         hit = confirm("Total score: "+score+"\n"+"Hit me?");
         if(score>21) break;
         if(hit) hand.hitMe();
-		context.clearRect(5,310,300,20);
+		context.fillRect(5,310,300,20);
 		context.fillText("Your Score: "+hand.score(),5,310);
     }
     return hand;
