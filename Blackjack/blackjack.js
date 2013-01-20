@@ -19,17 +19,23 @@ var hit = true;
 var buttonPressed = false;
 
 $hit.click(function(){
-	hit = true;
-	buttonPressed = true;
+	if(state === 1){
+		hit = true;
+		buttonPressed = true;
+	}
 });
 
 $stick.click(function(){
-	hit = false;
-	buttonPressed = true;
+	if(state === 1){
+		hit = false;
+		buttonPressed = true;
+	}
 });
 
 function waitForButtonClick(){
+	while(!buttonPressed)
 	
+	buttonPressed = false;
 }
 CanvasRenderingContext2D.prototype.clear = function (preserveTransform) {
   if (preserveTransform) {
@@ -250,7 +256,9 @@ function playAsUser(context){
     hit = true;
     while(hit){
         var score = hand.score();
-        hit = confirm("Total score: "+score+"\n"+"Hit me?");
+		state = 1;
+		waitForButtonClick();
+        //hit = confirm("Total score: "+score+"\n"+"Hit me?");
         if(score>21) break;
         if(hit) hand.hitMe();
 		context.clearRect(5,290,300,20);
