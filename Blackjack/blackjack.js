@@ -254,6 +254,7 @@ function playAsDealer(){
     return hand;
 }
 //play as the user 
+/*unnecessary
 function playAsUser(){
     var hand = new Hand(context,5,30);
     hit = true;
@@ -267,7 +268,7 @@ function playAsUser(){
     }
     return hand;
 }
-
+*/
 function declareWinner(userHand,dealerHand){
     var userScore = userHand.score();
     var dealerScore = dealerHand.score();
@@ -303,6 +304,3 @@ function displayScore(){
     context.clearRect(5,290,300,20);
     context.fillText("Your Score: "+userHand.score(),5,310);
 }
-
-
-
