@@ -2,6 +2,10 @@ var context;
 window.onload = function(){
 	var canvas = document.getElementById("canvas");
 	context = canvas.getContext("2d");
+    context.fillStyle= "white";
+    context.font = "16pt Calibri";
+    context.fillText("Welcome to Blackjack",120,140);
+    context.fillText("Press Deal to play",140,180);
 	$stick.attr("disabled", true);
     $hit.attr("disabled", true);
 };
@@ -11,11 +15,6 @@ var $stick= $('.stick');
 var hit = true;
 
 $deal.click(function(){
-    context.clear();
-    context.fillStyle= "white";
-    context.font = "16pt Calibri";
-	context.fillText("Your Hand",5,15);
-	context.fillText("Dealer Hand",5,165);
     createGame();
 });
 
@@ -30,6 +29,17 @@ $hit.click(function(){
 });
 
 $stick.click(stick);
+
+function stick(){
+    var dealer = playAsDealer();
+    var winner = declareWinner(userHand,dealer);
+    context.fillText("Dealer Score: "+dealer.score(),5,330);
+    context.fillText(winner,5,350);
+    $stick.attr("disabled", true);
+    $hit.attr("disabled", true);
+    $deal.attr("disabled",false);
+}
+
 
 CanvasRenderingContext2D.prototype.clear = function (preserveTransform) {
   if (preserveTransform) {
@@ -278,6 +288,12 @@ function declareWinner(userHand,dealerHand){
 }
 
 function createGame(){
+    context.clear();
+    context.fillText("Your Hand",5,15);
+	context.fillText("Dealer Hand",5,165);
+    $deal.attr("disabled",true);
+    $stick.attr("disabled", false);
+    $hit.attr("disabled", false);
     createDeck();
     userHand = new Hand(context,5,30);
     displayScore();
@@ -288,11 +304,5 @@ function displayScore(){
     context.fillText("Your Score: "+userHand.score(),5,310);
 }
 
-function stick(){
-    var dealer = playAsDealer();
-    var winner = declareWinner(userHand,dealer);
-    context.fillText("Dealer Score: "+dealer.score(),5,330);
-    context.fillText(winner,5,350);
-}
 
 
