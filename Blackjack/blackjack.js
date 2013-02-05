@@ -41,12 +41,10 @@ function stick(){
     $stick.attr("disabled", true);
     $hit.attr("disabled", true);
     $deal.attr("disabled",false);
-    console.log("wins "+wins+" losses "+losses+" draws "+draws);
     $drawsLbl.text("Draws: "+draws);
     $winsLbl.text("Wins: "+wins);
     $lossesLbl.text("Losses: "+losses);
 }
-
 
 CanvasRenderingContext2D.prototype.clear = function (preserveTransform) {
   if (preserveTransform) {
