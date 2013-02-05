@@ -12,7 +12,10 @@ window.onload = function(){
 var $deal = $('.deal');
 var $hit = $('.hit');
 var $stick= $('.stick');
-var hit = true;
+var $winsLbl = $('.wins');
+var $drawsLbl = $('.draws');
+var $lossesLbl = $('.losses');
+var wins = 0,draws=0,losses=0;
 
 $deal.click(function(){
     createGame();
@@ -272,20 +275,36 @@ function playAsUser(){
 function declareWinner(userHand,dealerHand){
     var userScore = userHand.score();
     var dealerScore = dealerHand.score();
-    if(userScore>21 && dealerScore >21)
+    if(userScore>21 && dealerScore >21){
+        draws++;
         return "You tied!";
-    else if(userScore > 21)
-        return "You lose!";
-    else if(dealerScore > 21)
-        return "You win!";
-    else{
-        if(userScore > dealerScore)
-            return "You win!";
-        else if(userScore === dealerScore)
-            return "You tied!";
-        else
-            return "You lose!";
     }
+    else if(userScore > 21){
+        losses++;
+        return "You lose!";
+    }
+    else if(dealerScore > 21){
+        wins++;
+        return "You win!";
+    }
+    else{
+        if(userScore > dealerScore){
+            wins++;
+            return "You win!";
+        }
+        else if(userScore === dealerScore){
+            draws++;
+            return "You tied!";
+        }
+        else{
+            losses++;
+            return "You lose!";
+        }
+    }
+    console.log("wins "+wins+" losses "+losses+" draws "+draws);
+    $drawsLbl.text("Draws: "+draws);
+    $winsLbl.text("Wins: "+wins);
+    $lossesLbl.text("Losses: "+losses);
 }
 
 function createGame(){
