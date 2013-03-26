@@ -1,42 +1,51 @@
+var context;
 window.onload = function(){
 	var canvas = document.getElementById("canvas");
-	var context = canvas.getContext("2d");
-	var width = canvas.width;
-	var height = canvas.height;
-	context.fillStyle= "white";
-	context.font = "16pt Calibri";
-	context.fillText("Your Hand",5,15);
-	context.fillText("Dealer Hand",5,165);
-	$hit.attr("disabled", true);
+	context = canvas.getContext("2d");
+    context.fillStyle= "white";
+    context.font = "16pt Calibri";
+    context.fillText("Welcome to Blackjack",120,140);
+    context.fillText("Press Deal to play",140,180);
 	$stick.attr("disabled", true);
-	playGame(context);
-}
-$deal = $('.deal');
-$hit = $('.hit');
-$stick= $('.stick');
-var state = 0;
-var hit = true;
-var buttonPressed = false;
+    $hit.attr("disabled", true);
+};
+var $deal = $('.deal');
+var $hit = $('.hit');
+var $stick= $('.stick');
+var $winsLbl = $('.wins');
+var $drawsLbl = $('.draws');
+var $lossesLbl = $('.losses');
+var wins = 0,draws=0,losses=0;
+
+$deal.click(function(){
+    createGame();
+});
 
 $hit.click(function(){
-	if(state === 1){
-		hit = true;
-		buttonPressed = true;
-	}
+    var score = userHand.score();
+    if(score>21) 
+        stick();
+    else{
+        userHand.hitMe();
+        displayScore();
+    }
 });
 
-$stick.click(function(){
-	if(state === 1){
-		hit = false;
-		buttonPressed = true;
-	}
-});
+$stick.click(stick);
 
-function waitForButtonClick(){
-	while(!buttonPressed)
-	
-	buttonPressed = false;
+function stick(){
+    var dealer = playAsDealer();
+    var winner = declareWinner(userHand,dealer);
+    context.fillText("Dealer Score: "+dealer.score(),5,330);
+    context.fillText(winner,5,350);
+    $stick.attr("disabled", true);
+    $hit.attr("disabled", true);
+    $deal.attr("disabled",false);
+    $drawsLbl.text("Draws: "+draws);
+    $winsLbl.text("Wins: "+wins);
+    $lossesLbl.text("Losses: "+losses);
 }
+
 CanvasRenderingContext2D.prototype.clear = function (preserveTransform) {
   if (preserveTransform) {
     this.save();
@@ -65,28 +74,28 @@ CanvasRenderingContext2D.prototype.clear = function (preserveTransform) {
 CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius, fill, stroke) {
 	if (typeof stroke == "undefined" ) {
 			stroke = true;
-		  }
-		  if (typeof radius === "undefined") {
-			radius = 5;
-		  }
-		  this.beginPath();
-		  this.moveTo(x + radius, y);
-		  this.lineTo(x + width - radius, y);
-		  this.quadraticCurveTo(x + width, y, x + width, y + radius);
-		  this.lineTo(x + width, y + height - radius);
-		  this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-		  this.lineTo(x + radius, y + height);
-		  this.quadraticCurveTo(x, y + height, x, y + height - radius);
-		  this.lineTo(x, y + radius);
-		  this.quadraticCurveTo(x, y, x + radius, y);
-		  this.closePath();
-		  if (stroke) {
-			this.stroke();
-		  }
-		  if (fill) {
-			this.fill();
-		  }        
 	}
+	if (typeof radius === "undefined") {
+        radius = 5;
+    }
+    this.beginPath();
+	this.moveTo(x + radius, y);
+	this.lineTo(x + width - radius, y);
+	this.quadraticCurveTo(x + width, y, x + width, y + radius);
+	this.lineTo(x + width, y + height - radius);
+	this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+	this.lineTo(x + radius, y + height);
+	this.quadraticCurveTo(x, y + height, x, y + height - radius);
+    this.lineTo(x, y + radius);
+	this.quadraticCurveTo(x, y, x + radius, y);
+	this.closePath();
+	if (stroke) {
+		this.stroke();
+	}
+	if (fill) {
+		this.fill();
+	}        
+};
 
 /*
 *  
@@ -103,7 +112,7 @@ CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, rad
 */
 function createCard(context,x,y,num,suit,width,height,colour){
 	context.save();
-	context.save()
+	context.save();
 	context.lineWidth   = 2;
 	context.fillStyle = "white";
 	context.strokeStyle = "#000";
@@ -136,8 +145,9 @@ function createCard(context,x,y,num,suit,width,height,colour){
 */
 var colour= ["black","red"];
 var cardNum = ["A",2,3,4,5,6,7,8,9,10,"J","Q","K"];
-var suitName = [eval('"\\u2660"'),eval('"\\u2665"'),eval('"\\u2663"'),eval('"\\u2666"')];
+var suitName = [String.fromCharCode(parseInt("2660",16)),String.fromCharCode(parseInt("2665",16)),String.fromCharCode(parseInt("2663",16)),String.fromCharCode(parseInt("2666",16))];
 var cards=[];
+var userHand;
 /* 
 * createDeck()
 * creates the deck by creating a card and storing them to cards
@@ -188,8 +198,6 @@ function Card(sui,num){
 */
 function Hand(context,x,y){
     var cards =[];
-    var handx=x;
-    var handy=y;
 	//set up initial hand with two cards
     cards.push(deal());
     createCard(context,x,y,cardNum[cards[0].getNumber()-1],suitName[cards[0].getSuit()-1],60,100,colour[(cards[0].getSuit()-1)%2]);
@@ -233,7 +241,7 @@ function Hand(context,x,y){
     this.hitMe = function(){
         cards.push(deal());
         createCard(context,x,y,cardNum[cards[cards.length-1].getNumber()-1],suitName[cards[cards.length-1].getSuit()-1],60,100,colour[(cards[cards.length-1].getSuit()-1)%2]);
-    	x+=75;
+        x+=75;
     };
 }
 //pops a card from the cards array
@@ -241,7 +249,7 @@ function deal(){
     return cards.pop();
 }
 //plays as the computer
-function playAsDealer(context){
+function playAsDealer(){
     var hand = new Hand(context,5,180);
     var score = hand.score();
     while(score < 17){
@@ -251,14 +259,13 @@ function playAsDealer(context){
     return hand;
 }
 //play as the user 
-function playAsUser(context){
+/*unnecessary
+function playAsUser(){
     var hand = new Hand(context,5,30);
     hit = true;
     while(hit){
         var score = hand.score();
-		state = 1;
-		waitForButtonClick();
-        //hit = confirm("Total score: "+score+"\n"+"Hit me?");
+        hit = confirm("Total score: "+score+"\n"+"Hit me?");
         if(score>21) break;
         if(hit) hand.hitMe();
 		context.clearRect(5,290,300,20);
@@ -266,36 +273,52 @@ function playAsUser(context){
     }
     return hand;
 }
-
+*/
 function declareWinner(userHand,dealerHand){
-    userScore = userHand.score();
-    dealerScore = dealerHand.score();
-    if(userScore>21 && dealerScore >21)
+    var userScore = userHand.score();
+    var dealerScore = dealerHand.score();
+    if(userScore>21 && dealerScore >21){
+        draws++;
         return "You tied!";
-    else if(userScore > 21)
-        return "You lose!";
-    else if(dealerScore > 21)
-        return "You win!";
-    else{
-        if(userScore > dealerScore)
-            return "You win!";
-        else if(userScore === dealerScore)
-            return "You tied!";
-        else
-            return "You lose!";
     }
+    else if(userScore > 21){
+        losses++;
+        return "You lose!";
+    }
+    else if(dealerScore > 21){
+        wins++;
+        return "You win!";
+    }
+    else{
+        if(userScore > dealerScore){
+            wins++;
+            return "You win!";
+        }
+        else if(userScore === dealerScore){
+            draws++;
+            return "You tied!";
+        }
+        else{
+            losses++;
+            return "You lose!";
+        }
+    }
+    
 }
 
-function playGame(context){
+function createGame(){
+    context.clear();
+    context.fillText("Your Hand",5,15);
+	context.fillText("Dealer Hand",5,165);
+    $deal.attr("disabled",true);
+    $stick.attr("disabled", false);
+    $hit.attr("disabled", false);
     createDeck();
-    var user = playAsUser(context);
-    var dealer = playAsDealer(context);
-    var winner = declareWinner(user,dealer);
-    console.log(user.printHand()+"\n"+"Total score: "+user.score());
-    context.fillText("Your Score: "+user.score(),5,310);
-    console.log(dealer.printHand()+"\n"+"Total score: "+dealer.score());
-    context.fillText("Dealer Score: "+dealer.score(),5,330);
-    console.log(winner);
-    context.fillText(winner,5,350);
+    userHand = new Hand(context,5,30);
+    displayScore();
 }
 
+function displayScore(){
+    context.clearRect(5,290,300,20);
+    context.fillText("Your Score: "+userHand.score(),5,310);
+}
